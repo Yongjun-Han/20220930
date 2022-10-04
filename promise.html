@@ -58,36 +58,40 @@
       top: 0,
       left: 0,
     }
-
     box.addEventListener('click', () => {
       let moveTop = setInterval( ()=> {
+        console.log("going down untill 500")
         return new Promise( (resolve, reject)=> {
-          resolve()
+          resolve("down")
         })
-        .then(()=> {
-          posValue.top++;
+        .then((data)=> {
+          if(data === "down") {
+            posValue.top++;
           box.style.top = posValue.top + "px";
             if(posValue.top === 500) {
               clearInterval(moveTop);
+              console.log("stop to move right");
               return new Promise( (resolve,reject)=> {
-                resolve()
+                resolve("right")
               })
-        .then(() => {
-          let moveRight = setInterval(() => {
-              posValue.left++;
-              box.style.left = posValue.left + "px";
-              if(posValue.left === 500) {
-                clearInterval(moveRight)
-                console.log("complete");
-              }
-          }, 16);
-        })
+              .then((data) => {
+                let moveRight = setInterval(() => {
+                  console.log("going right untill 500");
+                  if(data === "right"){
+                    posValue.left++;
+                    box.style.left = posValue.left + "px";
+                    if(posValue.left === 500) {
+                      clearInterval(moveRight)
+                      console.log("complete");
+                    }
+                  }
+                }, 16);
+              })
             }
+          }
         })
       },16)
     })
-    
     </script>
 </body>
-
 </html>
